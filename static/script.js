@@ -1,205 +1,237 @@
-// Encapsulamiento del código (Buenas prácticas)
+/**
+ * script.js — Luis Paria Portafolio
+ * Módulos: Cursor · Tema · ScrollReveal · Nav · Tabs · MenúMóvil · BotónArriba
+ */
+
 (() => {
-    // 1. Cursor Minimalista y Partículas Canvas (Optimizado)
-    const cursor = document.getElementById('customCursor');
-    const canvas = document.getElementById('particleCanvas');
-    const ctx = canvas.getContext('2d');
+  'use strict';
 
-    let particlesArray = [];
-    let hue = 0;
+  /* ══════════════════════════════════════════
+     CURSOR PERSONALIZADO
+  ══════════════════════════════════════════ */
+  const initCursor = () => {
+    const el = document.getElementById('cursor');
+    if (!el) return;
 
-    // Ajustar el tamaño del canvas al redimensionar  la ventana
-    function resizeCanvas() {
-        canvas.width = window.innerWidth;
-        canvas.height = window.innerHeight;
-    }
-    window.addEventListener('resize', resizeCanvas);
-    resizeCanvas();
-
-    // Objeto Partícula
-    class Particle {
-        constructor(x, y) {
-            this.x = x;
-            this.y = y;
-            this.size = Math.random() * 8 + 4;
-            this.speedX = Math.random() * 2 - 1;
-            this.speedY = Math.random() * 2 - 1;
-            this.color = `hsl(${hue}, 100%, 50%)`;
-            this.life = 1; // Opacidad
-        }
-        update() {
-            this.x += this.speedX;
-            this.y += this.speedY;
-            this.size -= 0.1;
-            this.life -= 0.02;
-        }
-        draw() {
-            ctx.beginPath();
-            ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
-            ctx.fillStyle = this.color;
-            ctx.globalAlpha = Math.max(this.life, 0); // Previene valores negativos
-            ctx.fill();
-        }
+    // Ocultar en dispositivos táctiles
+    if (window.matchMedia('(pointer: coarse)').matches) {
+      el.style.display = 'none';
+      document.body.style.cursor = 'auto';
+      document.querySelectorAll('a, button, [role="button"]').forEach(n => {
+        n.style.cursor = 'auto';
+      });
+      return;
     }
 
-    // Capturar el movimiento para el cursor y las partículas
-    document.addEventListener('mousemove', (e) => {
-        cursor.style.left = e.clientX + 'px';
-        cursor.style.top = e.clientY + 'px';
+    let x = -100, y = -100;
 
-        // Generar solo 2 partículas por evento para mejor rendimiento
-        for (let i = 0; i < 2; i++) {
-            particlesArray.push(new Particle(e.clientX, e.clientY));
-        }
-        hue = (hue + 5) % 360;
+    document.addEventListener('mousemove', e => {
+      x = e.clientX;
+      y = e.clientY;
+      el.style.left = x + 'px';
+      el.style.top  = y + 'px';
+    }, { passive: true });
+
+    // Efecto grow en interactivos
+    document.querySelectorAll('a, button, [role="button"]').forEach(node => {
+      node.addEventListener('mouseenter', () => el.classList.add('grow'),    { passive: true });
+      node.addEventListener('mouseleave', () => el.classList.remove('grow'), { passive: true });
     });
+  };
 
-    // Bucle de animación (60FPS sin tocar el DOM)
-    function animateParticles() {
-        ctx.clearRect(0, 0, canvas.width, canvas.height);
 
-        for (let i = 0; i < particlesArray.length; i++) {
-            particlesArray[i].update();
-            if (particlesArray[i].size > 0 && particlesArray[i].life > 0) {
-                particlesArray[i].draw();
-            } else {
-                particlesArray.splice(i, 1);
-                i--;
-            }
-        }
-        requestAnimationFrame(animateParticles);
-    }
-    animateParticles();
+  /* ══════════════════════════════════════════
+     MODO OSCURO / CLARO
+  ══════════════════════════════════════════ */
+  const initTheme = () => {
+    const btn  = document.getElementById('theme-btn');
+    const root = document.documentElement;
 
-    // Efecto hover del cursor sobre botones
-    const interactives = document.querySelectorAll('a, button, input, textarea, [role="button"]');
-    interactives.forEach(el => {
-        el.addEventListener('mouseenter', () => cursor.classList.add('hover'));
-        el.addEventListener('mouseleave', () => cursor.classList.remove('hover'));
-    });
-
-    // 2. Lógica de Scroll Reveal
-    const observerOptions = {
-        threshold: 0.1,
-        rootMargin: "0px 0px -50px 0px"
+    // Detectar preferencia guardada o preferencia del sistema
+    const getPreference = () => {
+      const saved = localStorage.getItem('theme');
+      if (saved) return saved;
+      return window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
     };
 
-    const observer = new IntersectionObserver((entries) => {
-        entries.forEach(entry => {
-            if (entry.isIntersecting) {
-                entry.target.classList.add('reveal-active');
-                observer.unobserve(entry.target); // Dejar de observar una vez que aparece
-            }
-        });
-    }, observerOptions);
+    const apply = (theme) => {
+      root.classList.toggle('dark', theme === 'dark');
+    };
 
-    document.querySelectorAll('.scroll-reveal').forEach(element => {
-        observer.observe(element);
+    // Aplicar al cargar (sin transición)
+    apply(getPreference());
+
+    if (!btn) return;
+
+    btn.addEventListener('click', () => {
+      const next = root.classList.contains('dark') ? 'light' : 'dark';
+      localStorage.setItem('theme', next);
+
+      // Usar View Transitions API si está disponible
+      if (!document.startViewTransition) {
+        apply(next);
+        return;
+      }
+      document.startViewTransition(() => apply(next));
+    });
+  };
+
+
+  /* ══════════════════════════════════════════
+     SCROLL REVEAL (Intersection Observer)
+  ══════════════════════════════════════════ */
+  const initScrollReveal = () => {
+    const nodes = document.querySelectorAll('.reveal');
+    if (!nodes.length) return;
+
+    const io = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (!entry.isIntersecting) return;
+        entry.target.classList.add('in-view');
+        io.unobserve(entry.target);
+      });
+    }, { threshold: 0.1, rootMargin: '0px 0px -40px 0px' });
+
+    nodes.forEach(n => io.observe(n));
+  };
+
+
+  /* ══════════════════════════════════════════
+     NAVBAR — sombra al hacer scroll
+  ══════════════════════════════════════════ */
+  const initNavbar = () => {
+    const header = document.getElementById('site-header');
+    if (!header) return;
+
+    const onScroll = () => {
+      header.classList.toggle('scrolled', window.scrollY > 20);
+    };
+
+    window.addEventListener('scroll', onScroll, { passive: true });
+    onScroll(); // ejecutar al cargar
+  };
+
+
+  /* ══════════════════════════════════════════
+     MENÚ MÓVIL
+  ══════════════════════════════════════════ */
+  const initMobileMenu = () => {
+    const btn   = document.getElementById('menu-btn');
+    const menu  = document.getElementById('mobile-menu');
+    const icoM  = document.getElementById('icon-menu');
+    const icoC  = document.getElementById('icon-close');
+    if (!btn || !menu) return;
+
+    let open = false;
+
+    const toggle = () => {
+      open = !open;
+      menu.classList.toggle('open', open);
+      menu.classList.toggle('hidden', !open);
+      menu.setAttribute('aria-hidden', String(!open));
+      btn.setAttribute('aria-expanded', String(open));
+      icoM?.classList.toggle('hidden', open);
+      icoC?.classList.toggle('hidden', !open);
+    };
+
+    btn.addEventListener('click', toggle);
+
+    // Cerrar al hacer clic en un link del menú
+    menu.querySelectorAll('a').forEach(a => {
+      a.addEventListener('click', () => {
+        if (open) toggle();
+      });
     });
 
-    // 3. Funcionalidad de Modo Claro / Oscuro (Theme Toggle)
-    const themeToggleBtns = document.querySelectorAll('#themeToggle');
-    const lightIcons = document.querySelectorAll('.light-icon');
-    const darkIcons = document.querySelectorAll('.dark-icon');
-    const body = document.body;
+    // Cerrar al hacer clic fuera
+    document.addEventListener('click', e => {
+      if (open && !menu.contains(e.target) && !btn.contains(e.target)) toggle();
+    }, { passive: true });
+  };
 
-    const savedTheme = localStorage.getItem('theme');
-    if (savedTheme === 'dark') {
-        body.classList.add('dark');
-        updateIcons(true);
-    } else {
-        body.classList.remove('dark');
-        updateIcons(false);
-    }
 
-    function updateIcons(isDark) {
-        if (isDark) {
-            lightIcons.forEach(i => i.classList.remove('hidden'));
-            darkIcons.forEach(i => i.classList.add('hidden'));
-        } else {
-            lightIcons.forEach(i => i.classList.add('hidden'));
-            darkIcons.forEach(i => i.classList.remove('hidden'));
-        }
-    }
+  /* ══════════════════════════════════════════
+     TABS DE EDUCACIÓN
+  ══════════════════════════════════════════ */
+  const initTabs = () => {
+    const btns = document.querySelectorAll('.edu-tab');
+    if (!btns.length) return;
 
-    function toggleTheme() {
-        body.classList.toggle('dark');
-        const isDark = body.classList.contains('dark');
-        localStorage.setItem('theme', isDark ? 'dark' : 'light');
-        updateIcons(isDark);
-    }
+    const activate = (targetId) => {
+      // Resetear todos los botones
+      btns.forEach(b => {
+        b.classList.remove('edu-tab--active');
+        b.setAttribute('aria-selected', 'false');
+      });
 
-    themeToggleBtns.forEach(btn => {
-        btn.addEventListener('click', () => {
-            if (!document.startViewTransition) {
-                toggleTheme();
-                return;
-            }
-            document.startViewTransition(() => {
-                toggleTheme();
-            });
+      // Ocultar todos los paneles
+      document.querySelectorAll('.edu-panel').forEach(p => {
+        p.classList.add('hidden');
+      });
+
+      // Activar botón y panel seleccionado
+      const activeBtn = document.querySelector(`[data-target="${targetId}"]`);
+      const activePanel = document.getElementById(targetId);
+
+      if (activeBtn) {
+        activeBtn.classList.add('edu-tab--active');
+        activeBtn.setAttribute('aria-selected', 'true');
+      }
+      if (activePanel) {
+        activePanel.classList.remove('hidden');
+        // Re-disparar animación CSS
+        void activePanel.offsetWidth;
+        activePanel.style.animation = 'none';
+        requestAnimationFrame(() => {
+          activePanel.style.animation = '';
         });
+      }
+    };
+
+    btns.forEach(btn => {
+      btn.addEventListener('click', () => {
+        const target = btn.getAttribute('data-target');
+        if (target) activate(target);
+      });
+    });
+  };
+
+
+  /* ══════════════════════════════════════════
+     SCROLL SUAVE + BOTÓN VOLVER ARRIBA
+  ══════════════════════════════════════════ */
+  const initScroll = () => {
+    const backBtn = document.getElementById('back-top');
+
+    // Scroll suave para anclas internas
+    document.querySelectorAll('a[href^="#"]').forEach(a => {
+      a.addEventListener('click', e => {
+        const href = a.getAttribute('href');
+        if (!href || href === '#') return;
+        const target = document.querySelector(href);
+        if (!target) return;
+        e.preventDefault();
+        target.scrollIntoView({ behavior: 'smooth' });
+      });
     });
 
-    // 4. Lógica de Scroll suave y botón Volver Arriba
-    const backToTopButton = document.getElementById('backToTop');
+    // Botón volver arriba
+    if (!backBtn) return;
     window.addEventListener('scroll', () => {
-        if (window.scrollY > 300) {
-            backToTopButton.classList.remove('opacity-0', 'pointer-events-none');
-            backToTopButton.classList.add('opacity-100');
-        } else {
-            backToTopButton.classList.add('opacity-0', 'pointer-events-none');
-            backToTopButton.classList.remove('opacity-100');
-        }
-    });
+      backBtn.classList.toggle('show', window.scrollY > 400);
+    }, { passive: true });
+  };
 
-    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-        anchor.addEventListener('click', function (e) {
-            e.preventDefault();
-            const targetId = this.getAttribute('href');
-            if (targetId === '#') return;
-            const targetElement = document.querySelector(targetId);
-            if (targetElement) {
-                targetElement.scrollIntoView({ behavior: 'smooth' });
-            }
-        });
-    });
 
-    // 5. Lógica de Pestañas (Tailwind Classes Update)
-    const tabBtns = document.querySelectorAll('.tab-btn');
-    const tabContents = document.querySelectorAll('.tab-content');
+  /* ══════════════════════════════════════════
+     INICIALIZACIÓN
+  ══════════════════════════════════════════ */
+  initTheme();       // Primero para evitar flash
+  initCursor();
+  initNavbar();
+  initMobileMenu();
+  initScrollReveal();
+  initTabs();
+  initScroll();
 
-    tabBtns.forEach(btn => {
-        btn.addEventListener('click', () => {
-            // Reiniciar todos los botones
-            tabBtns.forEach(b => {
-                b.classList.remove('bg-[var(--btn-bg)]', 'text-[var(--text-color)]');
-                b.classList.add('hover:bg-black/5', 'text-[var(--text-muted)]');
-            });
-
-            // Ocultar todos los contenidos
-            tabContents.forEach(c => {
-                c.classList.add('hidden', 'opacity-0');
-                c.classList.remove('opacity-100');
-            });
-
-            // Activar el botón clicado
-            btn.classList.add('bg-[var(--btn-bg)]', 'text-[var(--text-color)]');
-            btn.classList.remove('hover:bg-black/5', 'text-[var(--text-muted)]');
-
-            // Mostrar el contenido correspondiente
-            const targetId = btn.getAttribute('data-target');
-            const targetContent = document.getElementById(targetId);
-
-            // Quitar la clase 'hidden' para que exista en el DOM
-            targetContent.classList.remove('hidden');
-
-            // Forzar el renderizado del navegador antes de cambiar la opacidad
-            void targetContent.offsetWidth;
-
-            // Ejecutar la animación de aparición
-            targetContent.classList.remove('opacity-0');
-            targetContent.classList.add('opacity-100');
-        });
-    });
 })();
