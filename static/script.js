@@ -8,7 +8,7 @@
     let particlesArray = [];
     let hue = 0;
 
-    // Ajustar el tamaño del canvas al redimensionar la ventana
+    // Ajustar el tamaño del canvas al redimensionar  la ventana
     function resizeCanvas() {
         canvas.width = window.innerWidth;
         canvas.height = window.innerHeight;
