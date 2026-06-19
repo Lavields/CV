@@ -1,0 +1,305 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="utf-8"/>
+    <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+    <title>Portafolio | Luis Paria</title>
+
+    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&amp;family=JetBrains+Mono:wght@400;500&amp;display=swap" rel="stylesheet"/>
+
+    <link rel="stylesheet" href="style/style.css">
+
+    <script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    fontFamily: {
+                        "display": ["Inter"],
+                        "body-lg": ["Inter"],
+                        "body-md": ["Inter"],
+                        "headline-lg": ["Inter"],
+                        "headline-md": ["Inter"],
+                        "label-md": ["JetBrains Mono"],
+                        "label-sm": ["JetBrains Mono"]
+                    }
+                }
+            }
+        }
+    </script>
+</head>
+<body class="font-body-md antialiased relative min-h-screen">
+
+<div class="custom-cursor" id="customCursor"></div>
+
+<nav class="fixed top-4 w-full z-50 flex justify-center px-4">
+    <div class="mac-dock flex justify-between items-center h-[60px] w-full max-w-4xl mx-auto">
+        <a class="font-label-md font-bold pl-2" style="color: var(--text-color)" href="#">&lt;Dev /&gt;</a>
+
+        <div class="hidden md:flex items-center gap-6 px-4" style="color: var(--text-muted)">
+            <a class="font-label-md hover:text-[var(--text-color)] transition-colors" href="#sobre-mi">Sobre Mí</a>
+            <a class="font-label-md hover:text-[var(--text-color)] transition-colors" href="#habilidades">Conocimientos</a>
+            <a class="font-label-md hover:text-[var(--text-color)] transition-colors" href="#proyectos">Proyectos</a>
+            <a class="font-label-md hover:text-[var(--text-color)] transition-colors" href="#trayectoria">Trayectoria</a>
+        </div>
+
+        <div class="flex items-center gap-4">
+            <button aria-label="Toggle Theme" class="btn-pill p-2 flex items-center justify-center w-10 h-10 rounded-full" id="themeToggle">
+                <span class="material-symbols-outlined text-[20px] light-icon hidden" translate="no">light_mode</span>
+                <span class="material-symbols-outlined text-[20px] dark-icon" translate="no">dark_mode</span>
+            </button>
+            <a class="btn-pill font-label-md px-5 py-2 inline-block rounded-full hidden md:block" href="#">Currículum</a>
+        </div>
+    </div>
+</nav>
+
+<main class="max-w-5xl mx-auto px-6 relative pt-24">
+
+    <section class="min-h-screen flex flex-col justify-center items-start" id="inicio">
+        <div class="mac-window w-full max-w-4xl relative pt-12 pb-10 px-10 md:px-16">
+            <div class="mac-header absolute top-0 left-0 w-full h-10">
+                <div class="mac-dots">
+                    <div class="mac-dot close"></div>
+                    <div class="mac-dot minimize"></div>
+                    <div class="mac-dot maximize"></div>
+                </div>
+            </div>
+            <div class="pt-4">
+                <p class="font-label-md uppercase tracking-wide mb-4" style="color: var(--text-muted)">Hola, mi nombre es</p>
+                <h1 class="font-display text-5xl md:text-7xl font-bold mb-2" style="color: var(--text-color)">Luis Paria</h1>
+                <h2 class="font-headline-lg text-gradient mb-6 font-semibold text-3xl md:text-5xl">Construyo soluciones con código y datos.</h2>
+                <p class="font-body-lg max-w-2xl mb-10 leading-relaxed" style="color: var(--text-muted)">
+                    Soy un desarrollador que fusiona la lógica de optimización de la ingeniería con el poder transformador de la programación. Me especializo en crear aplicaciones eficientes y en el análisis de información para la toma de decisiones.
+                </p>
+                <div class="flex flex-wrap gap-4">
+                    <a class="btn-primary-gradient font-label-md px-8 py-3 rounded-full font-medium" href="#proyectos">Ver mis proyectos</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="section-padding" id="sobre-mi">
+        <div class="flex items-center gap-6 mb-12">
+            <h2 class="font-headline-lg font-bold tracking-tight text-3xl" style="color: var(--text-color)">Sobre Mí</h2>
+        </div>
+        <div class="mac-window relative pt-12 pb-8 px-8 md:px-12">
+            <div class="mac-header absolute top-0 left-0 w-full h-10">
+                <div class="mac-dots">
+                    <div class="mac-dot close"></div>
+                    <div class="mac-dot minimize"></div>
+                    <div class="mac-dot maximize"></div>
+                </div>
+                <span class="ml-4 text-xs font-medium" style="color: var(--text-muted)">perfil.html</span>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-12 items-center pt-2">
+                <div class="font-body-md space-y-6 leading-relaxed" style="color: var(--text-muted)">
+                    <p>¡Hola! Mi interés por resolver problemas y optimizar procesos me llevó a estudiar Ingeniería Civil Industrial en la Universidad Católica del Maule. Descubrí que la programación es la herramienta definitiva para aplicar esa visión analítica.</p>
+                    <p>Fui becado en un Bootcamp Full Stack JavaScript, consolidando mis conocimientos en desarrollo web. Me motiva construir interfaces dinámicas sin descuidar la lógica que corre detrás.</p>
+                    <ul class="grid grid-cols-2 gap-3 mt-4 font-label-md">
+                        <li class="flex items-center gap-2"><span class="text-gradient material-symbols-outlined text-[16px]" translate="no">play_arrow</span> JavaScript (ES6+)</li>
+                        <li class="flex items-center gap-2"><span class="text-gradient material-symbols-outlined text-[16px]" translate="no">play_arrow</span> Python</li>
+                        <li class="flex items-center gap-2"><span class="text-gradient material-symbols-outlined text-[16px]" translate="no">play_arrow</span> SQL</li>
+                        <li class="flex items-center gap-2"><span class="text-gradient material-symbols-outlined text-[16px]" translate="no">play_arrow</span> HTML & CSS</li>
+                    </ul>
+                </div>
+                <div class="relative mx-auto w-full max-w-[280px] flex justify-center">
+                    <div class="p-2 rounded-full" style="background: var(--card-border);">
+                        <img alt="Foto de perfil" class="w-64 h-64 object-cover rounded-full border-4 border-transparent grayscale hover:grayscale-0 transition-all duration-300" src="https://images.unsplash.com/photo-1555066931-4365d14bab8c?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=60"/>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="section-padding" id="habilidades">
+        <div class="flex items-center gap-6 mb-12">
+            <h2 class="font-headline-lg font-bold tracking-tight text-3xl" style="color: var(--text-color)">Conocimientos</h2>
+        </div>
+        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+
+            <div class="glass-card p-8 text-center flex flex-col items-center">
+                <div class="w-16 h-16 rounded-full flex items-center justify-center mb-6 shadow-inner" style="background: var(--btn-bg); border: 1px solid var(--card-border);">
+                    <span class="material-symbols-outlined text-[32px]" style="color: var(--text-color)" translate="no">terminal</span>
+                </div>
+                <h3 class="font-headline-md mb-3 text-xl font-bold" style="color: var(--text-color)">Frontend</h3>
+                <p class="font-label-md text-sm leading-relaxed" style="color: var(--text-muted)">HTML5, CSS3, JavaScript, Tailwind CSS, Interfaces UI/UX.</p>
+            </div>
+
+            <div class="glass-card p-8 text-center flex flex-col items-center">
+                <div class="w-16 h-16 rounded-full flex items-center justify-center mb-6 shadow-inner" style="background: var(--btn-bg); border: 1px solid var(--card-border);">
+                    <span class="material-symbols-outlined text-[32px]" style="color: var(--text-color)" translate="no">database</span>
+                </div>
+                <h3 class="font-headline-md mb-3 text-xl font-bold" style="color: var(--text-color)">Datos & Backend</h3>
+                <p class="font-label-md text-sm leading-relaxed" style="color: var(--text-muted)">Python, Consultas SQL, Bases de datos relacionales, Node.js.</p>
+            </div>
+
+            <div class="glass-card p-8 text-center flex flex-col items-center">
+                <div class="w-16 h-16 rounded-full flex items-center justify-center mb-6 shadow-inner" style="background: var(--btn-bg); border: 1px solid var(--card-border);">
+                    <span class="material-symbols-outlined text-[32px]" style="color: var(--text-color)" translate="no">query_stats</span>
+                </div>
+                <h3 class="font-headline-md mb-3 text-xl font-bold" style="color: var(--text-color)">Herramientas</h3>
+                <p class="font-label-md text-sm leading-relaxed" style="color: var(--text-muted)">Power BI, Git, GitHub, VS Code, Metodologías Ágiles.</p>
+            </div>
+
+        </div>
+    </section>
+
+    <section class="section-padding" id="proyectos">
+        <div class="flex items-center gap-6 mb-12">
+            <h2 class="font-headline-lg font-bold tracking-tight text-3xl" style="color: var(--text-color)">Proyectos Destacados</h2>
+        </div>
+
+        <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
+            <div class="mac-window group flex flex-col h-full">
+                <div class="mac-header">
+                    <div class="mac-dots">
+                        <div class="mac-dot close"></div>
+                        <div class="mac-dot minimize"></div>
+                        <div class="mac-dot maximize"></div>
+                    </div>
+                    <span class="ml-4 text-xs font-medium" style="color: var(--text-muted)">sistema.js</span>
+                </div>
+                <div class="relative h-56 overflow-hidden bg-black/10">
+                    <img alt="Project" class="w-full h-full object-cover opacity-90 group-hover:opacity-100 group-hover:scale-105 transition-all duration-500" src="https://images.unsplash.com/photo-1551288049-bebda4e38f71?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80"/>
+                </div>
+                <div class="p-8 flex-grow flex flex-col">
+                    <p class="font-label-sm text-gradient font-semibold mb-2 uppercase tracking-wider">Desarrollo Web</p>
+                    <h3 class="font-headline-md mb-4 text-2xl font-bold" style="color: var(--text-color)">Sistema de Gestión</h3>
+                    <div class="font-body-md mb-6 flex-grow leading-relaxed" style="color: var(--text-muted)">
+                        <p>Aplicación web diseñada para digitalizar procesos internos. Incluye autenticación de usuarios y un panel interactivo de control.</p>
+                    </div>
+                    <div class="mt-auto">
+                        <ul class="flex flex-wrap gap-2 font-label-sm mb-6" style="color: var(--text-muted)">
+                            <li class="px-3 py-1 rounded-full text-xs" style="background: var(--btn-bg)">JavaScript</li>
+                            <li class="px-3 py-1 rounded-full text-xs" style="background: var(--btn-bg)">Node.js</li>
+                            <li class="px-3 py-1 rounded-full text-xs" style="background: var(--btn-bg)">Tailwind</li>
+                        </ul>
+                        <div class="flex gap-4" style="color: var(--text-muted)">
+                            <a class="hover:scale-110 transition-all hover:text-purple-500" href="#"><span class="material-symbols-outlined" translate="no">code</span></a>
+                            <a class="hover:scale-110 transition-all hover:text-purple-500" href="#"><span class="material-symbols-outlined" translate="no">open_in_new</span></a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="mac-window group flex flex-col h-full">
+                <div class="mac-header">
+                    <div class="mac-dots">
+                        <div class="mac-dot close"></div>
+                        <div class="mac-dot minimize"></div>
+                        <div class="mac-dot maximize"></div>
+                    </div>
+                    <span class="ml-4 text-xs font-medium" style="color: var(--text-muted)">analisis.py</span>
+                </div>
+                <div class="relative h-56 overflow-hidden bg-black/10">
+                    <img alt="Project" class="w-full h-full object-cover opacity-90 group-hover:opacity-100 group-hover:scale-105 transition-all duration-500" src="https://images.unsplash.com/photo-1460925895917-afdab827c52f?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80"/>
+                </div>
+                <div class="p-8 flex-grow flex flex-col">
+                    <p class="font-label-sm text-gradient font-semibold mb-2 uppercase tracking-wider">Data Analytics</p>
+                    <h3 class="font-headline-md mb-4 text-2xl font-bold" style="color: var(--text-color)">Dashboard Analítico</h3>
+                    <div class="font-body-md mb-6 flex-grow leading-relaxed" style="color: var(--text-muted)">
+                        <p>Desarrollo de un panel para la visualización de métricas (KPIs), conectando bases SQL para facilitar la toma de decisiones estratégicas.</p>
+                    </div>
+                    <div class="mt-auto">
+                        <ul class="flex flex-wrap gap-2 font-label-sm mb-6" style="color: var(--text-muted)">
+                            <li class="px-3 py-1 rounded-full text-xs" style="background: var(--btn-bg)">Python</li>
+                            <li class="px-3 py-1 rounded-full text-xs" style="background: var(--btn-bg)">SQL</li>
+                            <li class="px-3 py-1 rounded-full text-xs" style="background: var(--btn-bg)">Power BI</li>
+                        </ul>
+                        <div class="flex gap-4" style="color: var(--text-muted)">
+                            <a class="hover:scale-110 transition-all hover:text-purple-500" href="#"><span class="material-symbols-outlined" translate="no">code</span></a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="section-padding max-w-4xl mx-auto" id="trayectoria">
+        <div class="flex items-center gap-6 mb-12">
+            <h2 class="font-headline-lg font-bold tracking-tight text-3xl" style="color: var(--text-color)">Trayectoria & Educación</h2>
+        </div>
+
+        <div class="mac-window p-8 md:p-12 relative pt-12">
+            <div class="mac-header absolute top-0 left-0 w-full h-10">
+                <div class="mac-dots">
+                    <div class="mac-dot close"></div>
+                    <div class="mac-dot minimize"></div>
+                    <div class="mac-dot maximize"></div>
+                </div>
+            </div>
+
+            <div class="flex flex-col md:flex-row gap-10 pt-4">
+                <div class="flex md:flex-col overflow-x-auto md:overflow-visible w-full md:w-56 flex-shrink-0 gap-2 border-b md:border-b-0 md:border-r pb-4 md:pb-0 md:pr-6" style="border-color: var(--card-border)">
+                    <button data-target="tab-bootcamp" class="tab-btn px-5 py-3 text-left font-label-md rounded-lg transition-colors whitespace-nowrap font-medium" style="background: var(--btn-bg); color: var(--text-color);">Bootcamp Full Stack</button>
+                    <button data-target="tab-ucm" class="tab-btn px-5 py-3 text-left font-label-md rounded-lg transition-colors whitespace-nowrap hover:bg-black/5" style="color: var(--text-muted);">Ingeniería UCM</button>
+                </div>
+
+                <div class="font-body-md pt-2 md:pt-0 w-full">
+
+                    <div id="tab-bootcamp" class="tab-content animate-[fadeIn_0.5s_ease-out]">
+                        <h3 class="font-headline-md mb-2 text-2xl font-bold" style="color: var(--text-color)">Desarrollador <span class="text-gradient">@Talento Digital</span></h3>
+                        <p class="font-label-sm mb-6 font-medium" style="color: var(--text-muted)">Mayo 2026 - Presente</p>
+                        <ul class="space-y-5" style="color: var(--text-muted)">
+                            <li class="flex items-start gap-4">
+                                <span class="text-gradient material-symbols-outlined text-[18px] mt-1 flex-shrink-0" translate="no">check_circle</span>
+                                <span class="leading-relaxed">Participación en programa intensivo enfocado en el ecosistema JavaScript.</span>
+                            </li>
+                            <li class="flex items-start gap-4">
+                                <span class="text-gradient material-symbols-outlined text-[18px] mt-1 flex-shrink-0" translate="no">check_circle</span>
+                                <span class="leading-relaxed">Desarrollo práctico de aplicaciones web aplicando buenas prácticas.</span>
+                            </li>
+                        </ul>
+                    </div>
+
+                    <div id="tab-ucm" class="tab-content hidden animate-[fadeIn_0.5s_ease-out]">
+                        <h3 class="font-headline-md mb-2 text-2xl font-bold" style="color: var(--text-color)">Ingeniería en Ejecución Industrial <span class="text-gradient">@ UCM</span></h3>
+                        <p class="font-label-sm mb-6 font-medium" style="color: var(--text-muted)">Actualidad</p>
+                        <ul class="space-y-5" style="color: var(--text-muted)">
+                            <li class="flex items-start gap-4">
+                                <span class="text-gradient material-symbols-outlined text-[18px] mt-1 flex-shrink-0" translate="no">check_circle</span>
+                                <span class="leading-relaxed">Formación en optimización de procesos, modelado matemático y gestión.</span>
+                            </li>
+                            <li class="flex items-start gap-4">
+                                <span class="text-gradient material-symbols-outlined text-[18px] mt-1 flex-shrink-0" translate="no">check_circle</span>
+                                <span class="leading-relaxed">Aplicación de visión analítica para la resolución de problemas complejos.</span>
+                            </li>
+                        </ul>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="section-padding max-w-2xl mx-auto text-center" id="contacto">
+        <div class="glass-card relative p-12 md:p-16 flex flex-col items-center">
+            <h2 class="font-display mb-6 text-4xl md:text-5xl font-bold" style="color: var(--text-color)">Ponte en contacto</h2>
+            <p class="font-body-lg mb-10 leading-relaxed max-w-lg" style="color: var(--text-muted)">
+                Actualmente estoy abierto a nuevas oportunidades. Ya sea para un proyecto, consultoría de datos o simplemente saludar, ¡mi bandeja está abierta!
+            </p>
+            <a class="btn-primary-gradient font-label-md px-10 py-4 rounded-full text-lg font-medium inline-block rounded-full" href="mailto:tu-correo@ejemplo.com">Enviar un mensaje</a>
+        </div>
+    </section>
+</main>
+
+<footer class="w-full py-8 mt-12 border-t" style="background: var(--header-bg); border-color: var(--card-border);">
+    <div class="flex flex-col items-center gap-4 text-center">
+        <div class="flex gap-6 mb-2" style="color: var(--text-muted)">
+            <a class="hover:scale-110 hover:text-purple-500 transition-all" href="#"><span class="material-symbols-outlined" translate="no">code_blocks</span></a>
+            <a class="hover:scale-110 hover:text-purple-500 transition-all" href="#"><span class="material-symbols-outlined" translate="no">mail</span></a>
+        </div>
+        <p class="font-label-sm text-xs opacity-70" style="color: var(--text-muted)">© 2026 Construido por Luis Paria.</p>
+    </div>
+</footer>
+
+<a class="fixed bottom-8 right-8 glass-card p-3 rounded-full hover:bg-black/10 transition-all duration-300 opacity-0 pointer-events-none z-50 flex items-center justify-center" style="color: var(--text-color)" href="#inicio" id="backToTop">
+    <span class="material-symbols-outlined" translate="no">arrow_upward</span>
+</a>
+
+<script src="static/script.js" defer></script>
+</body>
+</html>
