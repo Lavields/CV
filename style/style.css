@@ -33,7 +33,7 @@ body {
     color: var(--text-color);
     transition: background-color 0.3s ease, color 0.3s ease;
     overflow-x: hidden;
-    cursor: none; /* Oculta el cursor por defecto para usar el personalizado */
+    cursor: none; /* Oculta el cursor por defecto */
 }
 
 a, button, [role="button"], input, textarea {
@@ -48,13 +48,7 @@ a, button, [role="button"], input, textarea {
     border: 1px solid var(--card-border);
     border-radius: 16px;
     box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
-    transition: transform 0.3s ease, background 0.3s ease, border-color 0.3s ease;
     overflow: hidden;
-}
-
-.glass-card:hover {
-    transform: translateY(-4px);
-    box-shadow: 0 15px 40px rgba(0, 0, 0, 0.15);
 }
 
 /* Cabecera de ventana macOS */
@@ -147,11 +141,11 @@ a, button, [role="button"], input, textarea {
     height: 12px;
     border-radius: 50%;
     background-color: var(--text-color);
-    pointer-events: none; /* Permite hacer clics a través de él */
+    pointer-events: none;
     transform: translate(-50%, -50%);
     z-index: 9999;
     transition: width 0.2s, height 0.2s, background-color 0.3s;
-    mix-blend-mode: difference; /* Efecto de contraste dinámico */
+    mix-blend-mode: difference;
 }
 
 .custom-cursor.hover {
@@ -161,18 +155,18 @@ a, button, [role="button"], input, textarea {
     mix-blend-mode: normal;
 }
 
-/* CLASE PARA PARTÍCULAS ARCOÍRIS */
-.rainbow-particle {
-    position: fixed;
-    border-radius: 50%;
-    pointer-events: none;
-    z-index: 9998;
-    animation: particleFade 0.6s ease-out forwards;
+/* SCROLL REVEAL CLASES */
+.scroll-reveal {
+    opacity: 0;
+    transform: translateY(30px);
+    filter: blur(5px);
+    transition: all 0.8s cubic-bezier(0.5, 0, 0, 1);
 }
 
-@keyframes particleFade {
-    0% { opacity: 0.8; transform: scale(1); }
-    100% { opacity: 0; transform: scale(0.2); }
+.scroll-reveal.reveal-active {
+    opacity: 1;
+    transform: translateY(0);
+    filter: blur(0);
 }
 
 /* TRANSICIÓN DE VISTA (DARK/LIGHT MODE) */
