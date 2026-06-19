@@ -171,31 +171,35 @@
 
     tabBtns.forEach(btn => {
         btn.addEventListener('click', () => {
-            // Reiniciar botones
+            // Reiniciar todos los botones
             tabBtns.forEach(b => {
                 b.classList.remove('bg-[var(--btn-bg)]', 'text-[var(--text-color)]');
                 b.classList.add('hover:bg-black/5', 'text-[var(--text-muted)]');
             });
 
-            // Ocultar contenidos
+            // Ocultar todos los contenidos
             tabContents.forEach(c => {
                 c.classList.add('hidden', 'opacity-0');
                 c.classList.remove('opacity-100');
             });
 
-            // Activar botón seleccionado
+            // Activar el botón clicado
             btn.classList.add('bg-[var(--btn-bg)]', 'text-[var(--text-color)]');
             btn.classList.remove('hover:bg-black/5', 'text-[var(--text-muted)]');
 
-            // Mostrar contenido correspondiente
+            // Mostrar el contenido correspondiente
             const targetId = btn.getAttribute('data-target');
             const targetContent = document.getElementById(targetId);
+
+            // Quitar la clase 'hidden' para que exista en el DOM
             targetContent.classList.remove('hidden');
-            // Pequeño timeout para que se aplique la clase 'hidden' antes de cambiar la opacidad
-            setTimeout(() => {
-                targetContent.classList.remove('opacity-0');
-                targetContent.classList.add('opacity-100');
-            }, 10);
+
+            // Forzar el renderizado del navegador antes de cambiar la opacidad
+            void targetContent.offsetWidth;
+
+            // Ejecutar la animación de aparición
+            targetContent.classList.remove('opacity-0');
+            targetContent.classList.add('opacity-100');
         });
     });
 })();
