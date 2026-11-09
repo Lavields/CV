@@ -144,6 +144,10 @@ h1, h2, h3, p { margin-top: 0; }
 /* ---------- Portada ---------- */
 .hero { display: grid; grid-template-columns: minmax(0, 1.3fr) minmax(18rem, .9fr); align-items: start; gap: 3.5rem; padding-block: 4.5rem 4rem; }
 h1 { max-width: 760px; margin-bottom: 1.4rem; font-size: clamp(2.7rem, 5.6vw, 4.6rem); line-height: 1.02; letter-spacing: -.055em; }
+.hero-avatar { display: none; }
+.hero-hello { margin: 0 0 .4rem; color: var(--muted); font-size: clamp(1.15rem, 1.8vw, 1.5rem); font-weight: 500; }
+.hero-name { margin-bottom: 1.1rem; font-size: clamp(3.6rem, 9vw, 7.4rem); line-height: .92; letter-spacing: -.06em; }
+.hero-role { display: flex; align-items: center; gap: .65rem; margin-bottom: 1rem; font-size: clamp(1.1rem, 1.7vw, 1.4rem); font-weight: 650; letter-spacing: -.01em; }
 h1 em { color: var(--muted); font-style: normal; }
 .lead { max-width: 640px; color: var(--muted); font-size: clamp(1.05rem, 1.5vw, 1.2rem); }
 .lead strong { color: var(--ink); font-weight: 650; }
@@ -295,8 +299,9 @@ a.contact-option:hover, .contact-mail:hover { border-color: var(--ink); transfor
 .contact-option strong { display: block; font-size: 1rem; }
 .contact-option small { display: block; color: var(--muted); font-size: .84rem; }
 .contact-mail a { display: flex; flex: 1; align-items: center; gap: .9rem; min-width: 0; }
-.contact-icon { display: grid; flex: none; place-items: center; width: 2.5rem; height: 2.5rem; border-radius: .7rem; background: var(--surface); font-weight: 800; }
-.ic-wa { background: #25d366; color: #08240f; } .ic-in { background: #0a66c2; color: #fff; } .ic-gh { background: var(--ink); color: var(--paper); }
+.contact-icon { display: grid; flex: none; place-items: center; width: 2.5rem; height: 2.5rem; border-radius: .7rem; background: var(--surface); }
+.contact-icon svg { width: 1.3rem; height: 1.3rem; }
+.ic-wa { background: #25d366; color: #fff; } .ic-gm { background: #fff; color: #ea4335; box-shadow: inset 0 0 0 1px rgba(0,0,0,.08); } .ic-in { background: #0a66c2; color: #fff; } .ic-gh { background: var(--ink); color: var(--paper); }
 .contact-go { margin-left: auto; color: var(--muted); }
 .copy-button { flex: none; min-height: 2.3rem; margin-left: auto; padding: .3rem .8rem; border: 1px solid var(--line); border-radius: .6rem; background: transparent; color: var(--ink); font-size: .82rem; font-weight: 700; }
 .copy-button:hover { border-color: var(--ink); }
@@ -385,6 +390,7 @@ html[data-theme="pixel"] h1, html[data-theme="pixel"] h2, html[data-theme="pixel
   font-family: "Press Start 2P", ui-monospace, monospace; font-weight: 400;
 }
 html[data-theme="pixel"] h1 { font-size: clamp(1.8rem, 3.8vw, 3.2rem); line-height: 1.3; letter-spacing: -.03em; }
+html[data-theme="pixel"] .hero-name { font-size: clamp(2.4rem, 6vw, 4.6rem); line-height: 1.15; }
 html[data-theme="pixel"] .section-heading h2, html[data-theme="pixel"] .contact h2 { font-size: clamp(1.45rem, 2.9vw, 2.5rem); line-height: 1.35; }
 html[data-theme="pixel"] .project-card h3 { font-size: clamp(1rem, 1.7vw, 1.3rem); line-height: 1.55; }
 html[data-theme="pixel"] .education-panel h3 { font-size: clamp(.98rem, 1.65vw, 1.25rem); line-height: 1.65; }
@@ -441,7 +447,12 @@ html[data-theme="pixel"] .sv-visual, html[data-theme="pixel"] .chat-visual { ima
   .section { padding-block: 3.75rem; }
   .hero { padding-block: 2.5rem 3rem; }
   h1 { font-size: clamp(2.3rem, 10.5vw, 3rem); }
-  .hero-actions .button-outline { display: none; }
+  .hero-name { font-size: clamp(3.2rem, 17vw, 4.6rem); }
+  .hero-avatar { display: block; width: 5.5rem; height: 5.5rem; margin-bottom: 1.4rem; border: 1px solid var(--line); border-radius: 50%; object-fit: cover; object-position: center 30%; filter: grayscale(100%) contrast(1.05); }
+  .hero-actions { display: grid; grid-template-columns: 1fr 1fr; }
+  .hero-actions .button { justify-content: center; }
+  .hero-actions .text-link { display: none; }
+  .portrait-card { display: none; }
   .proof { grid-template-columns: 1fr 1fr; gap: 1.1rem; margin-top: 2.2rem; }
   .hero-side { grid-template-columns: 1fr; }
   .portrait-card { aspect-ratio: 16 / 10; }

@@ -3,9 +3,9 @@ const dictionary = {
     skipLink: 'Saltar al contenido', menu: 'Menú', navProjects: 'Proyectos', navAbout: 'Sobre mí', navStack: 'Stack', navEducation: 'Educación', navContact: 'Contacto', navContactCta: 'Contactar',
     themeGroup: 'Selector de modo visual', themeLight: 'Modo claro', themeDark: 'Modo oscuro', themePixel: 'Modo Pixel Adventure',
     musicOn: 'Música: ON', musicOff: 'Música: OFF', musicOnLabel: 'Desactivar música', musicOffLabel: 'Activar música',
-    eyebrow: 'FULL STACK · DATOS · IA APLICADA — TALCA, CHILE',
-    heroTitle: 'Software que conecta personas, datos <em>y operación.</em>',
-    heroLead: 'Soy <strong>Luis Paria</strong>, desarrollador Full Stack con más de cinco años en producción industrial. Construyo herramientas que se usan en el mundo real: desde un <strong>TTS multistream para OBS</strong> hasta un <strong>asistente personal con IA</strong> en Telegram.',
+    heroHello: 'Hola, soy',
+    heroRole: 'Desarrollador Full Stack · Talca, Chile',
+    heroLead: 'Hago software útil para personas, datos y operación.',
     seeProjects: 'Ver proyectos <span aria-hidden="true">↓</span>', seeProjectsShort: 'Ver proyectos', downloadCv: 'Descargar CV', availability: 'Disponible para colaborar',
     proofProjects: 'proyectos publicados', proofTests: 'pruebas automatizadas', proofPlatforms: 'plataformas de streaming en vivo', proofYears: 'años en industria',
     nowKicker: 'AHORA CONSTRUYENDO', nowTitle: 'StreamVoice — TTS multistream', nowSub: 'Twitch · YouTube · Kick · TikTok en una sola cola',
@@ -51,9 +51,9 @@ const dictionary = {
     skipLink: 'Skip to content', menu: 'Menu', navProjects: 'Projects', navAbout: 'About', navStack: 'Stack', navEducation: 'Education', navContact: 'Contact', navContactCta: 'Contact me',
     themeGroup: 'Visual mode selector', themeLight: 'Light mode', themeDark: 'Dark mode', themePixel: 'Pixel Adventure mode',
     musicOn: 'Music: ON', musicOff: 'Music: OFF', musicOnLabel: 'Turn music off', musicOffLabel: 'Turn music on',
-    eyebrow: 'FULL STACK · DATA · APPLIED AI — TALCA, CHILE',
-    heroTitle: 'Software that connects people, data <em>and operations.</em>',
-    heroLead: 'I’m <strong>Luis Paria</strong>, a Full Stack developer with more than five years in industrial production. I build tools people actually use: from a <strong>multistream TTS for OBS</strong> to a <strong>personal AI assistant</strong> on Telegram.',
+    heroHello: 'Hi, I’m',
+    heroRole: 'Full Stack Developer · Talca, Chile',
+    heroLead: 'I build useful software for people, data and operations.',
     seeProjects: 'See projects <span aria-hidden="true">↓</span>', seeProjectsShort: 'See projects', downloadCv: 'Download résumé', availability: 'Available to collaborate',
     proofProjects: 'published projects', proofTests: 'automated tests', proofPlatforms: 'live streaming platforms', proofYears: 'years in industry',
     nowKicker: 'CURRENTLY BUILDING', nowTitle: 'StreamVoice — multistream TTS', nowSub: 'Twitch · YouTube · Kick · TikTok in a single queue',
@@ -260,9 +260,9 @@ document.querySelectorAll('a,button,summary').forEach(el => {
 });
 document.querySelector('#year').textContent = new Date().getFullYear();
 
-// La barra móvil se oculta cuando el contacto o el pie ya están en pantalla, para no taparlos.
+// La barra móvil se oculta mientras se ve la portada (que ya tiene esos botones) y cuando el contacto o el pie están en pantalla.
 const dock = document.querySelector('.mobile-dock');
-const dockTargets = [document.querySelector('#contacto'), document.querySelector('footer')].filter(Boolean);
+const dockTargets = [document.querySelector('#inicio'), document.querySelector('#contacto'), document.querySelector('footer')].filter(Boolean);
 if (dock && 'IntersectionObserver' in window) {
   const onScreen = new Set();
   const dockObserver = new IntersectionObserver(entries => {
@@ -270,6 +270,8 @@ if (dock && 'IntersectionObserver' in window) {
     dock.classList.toggle('is-hidden', onScreen.size > 0);
   });
   dockTargets.forEach(el => dockObserver.observe(el));
+} else if (dock) {
+  dock.classList.remove('is-hidden');
 }
 
 // El contenido es visible por defecto: solo se oculta para animarlo si el navegador puede revelarlo.
