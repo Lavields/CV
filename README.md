@@ -6,9 +6,11 @@ Sitio web personal de **Luis Francisco Paria Zuñiga**, desarrollador Full Stack
 
 ## Contenido
 
-- Perfil profesional y disponibilidad para colaborar.
-- Habilidades de desarrollo, datos e IA aplicada.
-- Casos de estudio de **Sismógrafo Global** y **Alke Wallet**.
+- Portada con propuesta de valor y cifras clave.
+- Proyectos con filtros: **StreamVoice**, **Life OS**, **Sismógrafo Global** y **Alke Wallet**.
+- Página de caso de estudio de StreamVoice (`streamvoice.html`) con arquitectura, métricas y decisiones técnicas.
+- Perfil, stack técnico (desarrollo, datos e IA aplicada) y formación.
+- Contacto con WhatsApp, correo (con botón para copiar), LinkedIn y GitHub.
 - Trayectoria académica y enlaces de contacto.
 - Interfaz bilingüe (español e inglés) y tres modos visuales: claro, oscuro y Pixel Adventure.
 
@@ -34,8 +36,9 @@ Luego visita la dirección que muestre el servidor.
 ## Estructura
 
 ```text
-├── assets/                  # Imagen de perfil, ilustraciones y CV descargable
+├── assets/                  # Imagen de perfil, ilustraciones (WebP), avatares y CV descargable
 ├── index.html               # Página principal para GitHub Pages
+├── streamvoice.html         # Caso de estudio de StreamVoice
 ├── styles.css               # Estilos y temas visuales
 ├── main.js                  # Interacciones, idioma, temas y accesibilidad
 ├── index.ejs                # Vista alternativa para un servidor Express

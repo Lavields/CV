@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="description" content="Caso de estudio de StreamVoice: TTS multistream para OBS con Twitch, YouTube, Kick y TikTok en una sola cola de voz." />
+    <title>StreamVoice — Caso de estudio · Luis Paria</title>
+    <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='18' fill='%2318181B'/%3E%3Cpath d='M18 16v32h7V31l12 17h9L33 30l12-14h-9L25 30V16z' fill='%23F4F4F5'/%3E%3C/svg%3E" />
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body class="case-page">
+    <a class="skip-link" href="#contenido" data-i18n="skipLink">Saltar al contenido</a>
+    <div class="cursor-aura" aria-hidden="true"></div><div class="pixel-scenery" aria-hidden="true"></div>
+    <header class="site-header">
+      <a class="brand" href="index.html" aria-label="Luis Paria, inicio">LP<span>.</span></a>
+      <nav class="desktop-nav" aria-label="Navegación principal"><a href="index.html#proyectos" aria-current="page" data-i18n="navProjects">Proyectos</a><a href="index.html#perfil" data-i18n="navAbout">Sobre mí</a><a href="index.html#stack" data-i18n="navStack">Stack</a><a href="index.html#educacion" data-i18n="navEducation">Educación</a></nav>
+      <div class="header-actions">
+        <div class="theme-switcher" role="group" aria-label="Selector de modo visual">
+          <button class="theme-choice" data-theme-choice="light" type="button" aria-pressed="false"><span aria-hidden="true">☼</span></button>
+          <button class="theme-choice" data-theme-choice="dark" type="button" aria-pressed="true"><span aria-hidden="true">◐</span></button>
+          <button class="theme-choice" data-theme-choice="pixel" type="button" aria-pressed="false"><span aria-hidden="true">✦</span></button>
+        </div>
+        <button class="music-button" id="music-toggle" type="button" aria-pressed="false" hidden><span aria-hidden="true">♫</span><span class="music-label">Música: OFF</span></button>
+        <button class="language-button" id="language-toggle" type="button" aria-label="Change language">EN</button>
+        <a class="button button-accent header-cta" href="index.html#contacto" data-i18n="navContactCta">Contactar</a>
+      </div>
+      <details class="mobile-menu"><summary aria-label="Abrir navegación"><span data-i18n="menu">Menú</span></summary><nav aria-label="Navegación móvil"><a href="index.html#proyectos" data-i18n="navProjects">Proyectos</a><a href="index.html#perfil" data-i18n="navAbout">Sobre mí</a><a href="index.html#stack" data-i18n="navStack">Stack</a><a href="index.html#educacion" data-i18n="navEducation">Educación</a><a href="index.html#contacto" data-i18n="navContact">Contacto</a></nav></details>
+    </header>
+
+    <main id="contenido" class="case">
+      <section class="section case-hero">
+        <nav class="crumb" aria-label="Ruta"><a href="index.html#proyectos" data-i18n="navProjects">Proyectos</a> / <span aria-current="page">StreamVoice</span></nav>
+        <div class="case-top">
+          <div>
+            <p class="eyebrow accent-text" data-i18n="csKicker">CASO DE ESTUDIO · TIEMPO REAL</p>
+            <h1 data-i18n="csTitle">StreamVoice: el chat de cuatro plataformas, en una sola voz.</h1>
+            <p class="lead" data-i18n="csSummary">Quienes transmiten en varias plataformas a la vez no tenían una forma gratuita de que su audiencia “hablara” en el directo. Construí un servidor que une los chats, los lee con voces configurables y anima un avatar dentro de OBS.</p>
+            <div class="hero-actions"><a class="button button-primary" href="https://github.com/Lavields/stream-tts-overlay" target="_blank" rel="noreferrer" data-i18n="viewRepo">Ver repositorio ↗</a><a class="button button-outline" href="index.html#proyectos" data-i18n="csBack">← Todos los proyectos</a></div>
+          </div>
+          <dl class="case-facts">
+            <div><dt data-i18n="csRole">Rol</dt><dd data-i18n="csRoleValue">Diseño, backend y frontend</dd></div>
+            <div><dt data-i18n="csYear">Año</dt><dd>2026</dd></div>
+            <div><dt data-i18n="csPlatforms">Plataformas</dt><dd>Web · macOS · Windows</dd></div>
+            <div><dt data-i18n="csStatus">Estado</dt><dd data-i18n="csStatusValue">Usado en directos reales</dd></div>
+            <div><dt>Backend</dt><dd>Node.js 22, WebSocket, SSE</dd></div>
+            <div><dt data-i18n="csVoice">Voz</dt><dd>Edge TTS, ElevenLabs, Qwen3</dd></div>
+          </dl>
+        </div>
+        <nav class="case-toc" aria-label="Secciones del caso" data-i18n-label="csTocLabel">
+          <a href="#problema" data-i18n="csTocProblem">Problema</a><a href="#arquitectura" data-i18n="csTocArch">Arquitectura</a><a href="#resultados" data-i18n="csTocResults">Resultados</a><a href="#decisiones" data-i18n="csTocDecisions">Decisiones técnicas</a><a href="#galeria" data-i18n="csTocGallery">Galería</a>
+        </nav>
+      </section>
+
+      <section class="case-body">
+        <div class="case-cols" id="problema">
+          <article class="case-box reveal"><h2 class="eyebrow" data-i18n="csProblemKicker">01 · EL PROBLEMA</h2><p data-i18n="csProblem">Cada plataforma tiene su propio chat y sus propios límites. Las herramientas de TTS existentes son de pago, funcionan con una sola plataforma o no se integran bien con OBS.</p></article>
+          <article class="case-box reveal"><h2 class="eyebrow" data-i18n="csSolutionKicker">02 · LA SOLUCIÓN</h2><p data-i18n="csSolution">Una cola compartida de hasta 100 mensajes que conserva la plataforma de origen, filtros de moderación, cambio de voz dentro del mensaje (<code>{verity}</code>) y un overlay que sincroniza la boca del avatar con el volumen.</p></article>
+        </div>
+
+        <article class="case-box reveal" id="arquitectura">
+          <h2 class="eyebrow" data-i18n="csArchKicker">03 · ARQUITECTURA</h2>
+          <ol class="flow">
+            <li class="node"><span class="node-kicker" data-i18n="csNodeIn">ENTRADA</span><strong data-i18n="csNodeInTitle">Chats en vivo</strong><span class="pf-row"><em class="pf tw">TWITCH</em><em class="pf yt">YOUTUBE</em><em class="pf kk">KICK</em><em class="pf tt">TIKTOK</em></span><span data-i18n="csNodeInText">WebSocket, polling y webhooks firmados</span></li>
+            <li class="node node-core"><span class="node-kicker" data-i18n="csNodeCore">NÚCLEO</span><strong>server.mjs</strong><span data-i18n="csNodeCoreText">Cola compartida, filtros, permisos por cuenta y token de overlay aislado</span></li>
+            <li class="node"><span class="node-kicker" data-i18n="csNodeVoice">VOZ</span><strong data-i18n="csNodeVoiceTitle">Motores TTS</strong><span data-i18n="csNodeVoiceText">Edge (gratis) · Fish · ElevenLabs · Qwen3 local</span></li>
+            <li class="node"><span class="node-kicker" data-i18n="csNodeOut">SALIDA · SSE</span><strong data-i18n="csNodeOutTitle">Overlay OBS</strong><span data-i18n="csNodeOutText">Avatar, boca según el volumen y subtítulos</span></li>
+          </ol>
+        </article>
+
+        <dl class="case-kpis" id="resultados">
+          <div class="reveal"><dt data-i18n="csKpi1">plataformas simultáneas</dt><dd>4</dd></div>
+          <div class="reveal"><dt data-i18n="csKpi2">pruebas con node:test</dt><dd>135</dd></div>
+          <div class="reveal"><dt data-i18n="csKpi3">emojis convertidos a voz</dt><dd>3.900+</dd></div>
+          <div class="reveal"><dt data-i18n="csKpi4">costo base con Edge TTS</dt><dd>0 $</dd></div>
+        </dl>
+
+        <div class="case-cols case-cols-wide">
+          <article class="case-box reveal" id="decisiones">
+            <h2 class="eyebrow" data-i18n="csDecisionsKicker">04 · DECISIONES TÉCNICAS</h2>
+            <ul class="decisions">
+              <li data-i18n="csDecision1"><strong>SSE en vez de WebSocket para el overlay:</strong> OBS solo necesita recibir estado, y SSE se reconecta solo.</li>
+              <li data-i18n="csDecision2"><strong>Claves que nunca vuelven al navegador:</strong> el servidor guarda los secretos, y en la app de escritorio se cifran con <code>safeStorage</code>.</li>
+              <li data-i18n="csDecision3"><strong>Contraseñas con scrypt y permisos validados en el servidor</strong> para cada canal y avatar.</li>
+              <li data-i18n="csDecision4"><strong>Texto pensado para el habla:</strong> expande abreviaciones del chat y describe emojis con los nombres de Unicode CLDR.</li>
+            </ul>
+          </article>
+          <article class="case-box reveal" id="galeria">
+            <h2 class="eyebrow" data-i18n="csGalleryKicker">05 · GALERÍA DE AVATARES</h2>
+            <div class="gallery">
+              <img src="assets/avatars/cat-chile.webp" alt="Avatar gato con camiseta de Chile" data-i18n-alt="csAlt1" width="160" height="160" loading="lazy" />
+              <img src="assets/avatars/chibi-ruby.webp" alt="Avatar chibi de pelo rojo" data-i18n-alt="csAlt2" width="160" height="160" loading="lazy" />
+              <img src="assets/avatars/cat-japon.webp" alt="Avatar gato con camiseta de Japón" data-i18n-alt="csAlt3" width="160" height="160" loading="lazy" />
+              <img src="assets/avatars/cat-calico.webp" alt="Avatar gato calicó" data-i18n-alt="csAlt4" width="160" height="160" loading="lazy" />
+              <img src="assets/avatars/cat-mexico.webp" alt="Avatar gato con camiseta de México" data-i18n-alt="csAlt5" width="160" height="160" loading="lazy" />
+              <img src="assets/avatars/sock.webp" alt="Avatar marioneta de calcetín" data-i18n-alt="csAlt6" width="160" height="160" loading="lazy" />
+              <img src="assets/avatars/female.webp" alt="Avatar de chica" data-i18n-alt="csAlt7" width="160" height="160" loading="lazy" />
+              <img src="assets/avatars/cat-black.webp" alt="Avatar gato negro" data-i18n-alt="csAlt8" width="160" height="160" loading="lazy" />
+            </div>
+          </article>
+        </div>
+
+        <a class="case-next" href="https://github.com/Lavields/life-os-assistant" target="_blank" rel="noreferrer"><span class="eyebrow" data-i18n="csNext">OTRO PROYECTO</span><strong data-i18n="csNextTitle">Life OS — asistente en Telegram ↗</strong></a>
+      </section>
+    </main>
+
+    <footer><span>© <span id="year"></span> Luis Paria</span><div><a href="https://www.linkedin.com/in/parialuis/" target="_blank" rel="noreferrer"><span>LinkedIn</span></a><a href="https://github.com/Lavields" target="_blank" rel="noreferrer"><span>GitHub</span></a></div></footer>
+    <script src="main.js"></script>
+  </body>
+</html>
